@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { toast } from "sonner";
 import { useRouter } from 'next/navigation';
+import { AxiosError } from "axios";
 
 export default function Register() {
   let router = useRouter();
@@ -25,97 +26,115 @@ export default function Register() {
 
 async  function handleRegister(values: registerSchemaType) {
     console.log(values);
- try{ let res = await axios.post(`https://ecommerce.routemisr.com/api/v1/auth/signup`, values);
+ try {
+   let res = await axios.post(
+     `https://ecommerce.routemisr.com/api/v1/auth/signup`,
+     values
+   );
    if (res.data.message) {
-     toast.success("you registered successfully !", { position: "top-center", duration: 3000 })
-     router.push('/login')
-    }
-  }
- catch (err) {
-   toast.error(err.response.data.message,{position:"top-center", duration:3000})
-   
-  }
+     toast.success("you registered successfully !", {
+       position: "top-center",
+       duration: 3000,
+     });
+     router.push("/login");
+   }
+ } catch (err) {
+   const error = err as AxiosError<{ message: string }>;
+
+   toast.error(error.response?.data?.message || "Something went wrong", {
+     position: "top-center",
+     duration: 3000,
+   });
+ }
   
 
   
   }
   return (
-    
     <>
-      <div className='w-[40%] mx-auto my-12 lg:shadow-2xl'>
-        <h1 className='text-center text-3xl text-green-500 font-bold  p-4'>Registration</h1>
-        <p className='text-center text-sm text-green-500  my-1 '>Kindly fill this form</p>
-      <Form {...form}>
-  <form className=' w-full lg:w-[50%] mx-auto text-center' onSubmit={form.handleSubmit(handleRegister)}><FormField
-    control={form.control}
-    name="name"
-    render={({field}) => (
-      <FormItem>
-
-        <FormLabel>Name:</FormLabel>
-        <FormControl>
-          <Input {...field} />
-        </FormControl>
-        <FormMessage  />
-      </FormItem>
-    )}
-  />
-  <FormField
-    control={form.control}
-    name="email"
-    render={({field}) => (
-      <FormItem>
-
-        <FormLabel>Email:</FormLabel>
-        <FormControl>
-          <Input type='email' {...field} />
-        </FormControl>
-        <FormMessage  />
-      </FormItem>
-    )}
-  />
-  <FormField
-    control={form.control}
-    name="password"
-    render={({field}) => (
-      <FormItem>
-
-        <FormLabel>Password:</FormLabel>
-        <FormControl>
-          <Input type='password' {...field} />
-        </FormControl>
-        <FormMessage  />
-      </FormItem>
-    )}
-  />
-  <FormField
-    control={form.control}
-    name="rePassword"
-    render={({field}) => (
-      <FormItem>
-
-        <FormLabel>Repasspwrd:</FormLabel>
-        <FormControl>
-          <Input type='password' {...field} />
-        </FormControl>
-        <FormMessage  />
-      </FormItem>
-    )}
-  />
-  <FormField
-    control={form.control}
-    name="phone"
-    render={({field}) => (
-      <FormItem>
-
-        <FormLabel>Phone:</FormLabel>
-        <FormControl>
-          <Input type='tel' {...field} />
-        </FormControl>
-        <FormMessage  />
-      </FormItem>
-    )}
+      <div className="lg:w-[40%] w-[80%] mx-auto my-12 p-8 shadow-xl shadow-emerald-300 ">
+        <h1 className="text-center text-3xl text-green-500 font-bold  p-4">
+          Registration
+        </h1>
+        <p className="text-center text-sm text-green-500  my-1 ">
+          Kindly fill this form
+        </p>
+        <Form {...form}>
+          <form
+            className=" w-full lg:w-[50%] mx-auto text-center"
+            onSubmit={form.handleSubmit(handleRegister)}
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="mb-4">
+                  <FormLabel>Name:</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          <Button className='m-4 text-center  bg-green-500'>Register Now</Button></form>
-</Form></div></>)
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="mb-4">
+                  <FormLabel>Email:</FormLabel>
+                  <FormControl>
+                    <Input type="email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="mb-4">
+                  <FormLabel>Password:</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="rePassword"
+              render={({ field }) => (
+                <FormItem className="mb-4">
+                  <FormLabel>Repasspwrd:</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem className="mb-4">
+                  <FormLabel>Phone:</FormLabel>
+                  <FormControl>
+                    <Input type="tel" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button className="m-4 text-center  bg-green-500">
+              Register Now
+            </Button>
+          </form>
+        </Form>
+      </div>
+    </>
+  );
 }

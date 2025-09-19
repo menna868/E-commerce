@@ -1,15 +1,16 @@
-import Image from "next/image";
 import MainSlider from "./_components/MainSlider/MainSlider";
 import CategorySlider from "./_components/CategorySlider/CategorySlider";
 import { GetProducts } from "@/Api/product.api";
 import { ProductTypes } from "@/Types/Product.types";
 import SingleProduct from "./_components/singleProduct/SingleProduct";
+import SearchBar from "./_components/Search/Search";
 
 export default async function Home() {
   let data=await GetProducts()
   
   return (
     <>
+      <SearchBar/>
    
         <MainSlider />
     

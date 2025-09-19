@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button } from "@/components/ui/button";
 import { ProductTypes } from '@/Types/Product.types';
-
+import AddBtn from '../AddBtn/AddBtn';
+import AddBtnWishlist from '../AddBtnWishlist/AddBtnWishlist';
 export default function Details({data}:{data:ProductTypes}) {
   return (
     <>
-      <div className="container w-full  lg:w-[80%] mx-auto p-4 flex flex-col lg:flex-row items-center ">
+      <div className="container w-full  lg:w-[80%] mx-auto p-6 flex flex-col lg:flex-row items-center ">
         <div className="w-1/4 m-4">
           <img src={data.imageCover} alt="image cover" className="w-full" />
         </div>
@@ -20,9 +20,10 @@ export default function Details({data}:{data:ProductTypes}) {
               <i className="fa-solid fa-star" style={{ color: "#FFD43B" }}></i>
             </span>
           </div>
-          <Button className="cursor-pointer bg-green-500 w-full ">
-            Add to Cart
-          </Button>
+          <div className='flex items-center justify-between'>
+            <AddBtn id={data.id} />
+            <AddBtnWishlist id={data.id} />
+          </div>
         </div>
       </div>
     </>

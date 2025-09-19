@@ -1,3 +1,4 @@
+
 import React from 'react'
 import {
   Card,
@@ -8,9 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ProductTypes } from '@/Types/Product.types';
+import AddBtn from '../AddBtn/AddBtn';
+import AddBtnWishlist from '../AddBtnWishlist/AddBtnWishlist';
 export default function SingleProduct({product}:{product:ProductTypes}) {
   return (
     <>
@@ -44,9 +46,10 @@ export default function SingleProduct({product}:{product:ProductTypes}) {
                 </span>
               </CardFooter>
             </Link>
-            <Button className="cursor-pointer bg-green-500">
-              Add to Cart
-            </Button>
+            <div className='flex justify-between mt-2 p-4'>
+              <AddBtn id={product.id} />
+            <AddBtnWishlist id={product.id} />
+            </div>
           </Card>
         </div>
       </div>
