@@ -4,7 +4,7 @@ import OrderDetails from '@/app/_components/orderDetails/OrderDetails';
 import React from 'react'
 
 export default async function ProductDetails({ params }:{params:Promise<{id:string}>}) {
-  let { id } = params;
+  let { id } =await params;
   let data = await UserOrdersApi(id);
   if (!data) return <h1>No data here</h1>;
 
